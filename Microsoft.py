@@ -26,7 +26,6 @@ def main():
 	documents = {'documents':[]}
 
 	for argNum in range(1, len(sys.argv)):
-		print(sys.argv[argNum])
 		documents["documents"].append({
 			'id':argNum,
 			'language': 'en',
