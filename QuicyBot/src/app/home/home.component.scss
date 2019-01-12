@@ -106,14 +106,30 @@
         animation-fill-mode: forwards;
       }
     }
+  }
 
-    .button-container {
-      background-color: red;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      width: 100vw;
-      height: 100px;
+  .button-container {
+    position: absolute;
+    bottom: 160px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100vw;
+
+    @keyframes show-start-button {
+      from { opacity: 0 }
+      to { opacity: 1 }
+    }
+
+    .start-button {
+      opacity: 0;
+      width: 150px;
+      height: 50px;
+      font-size: 16px;
+      animation:
+        show-start-button 2s;
+      animation-delay: 9s;
+      animation-fill-mode: forwards;
     }
   }
 }
