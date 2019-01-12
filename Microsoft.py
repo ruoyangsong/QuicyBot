@@ -39,6 +39,5 @@ def main():
 	
 	for argNum in range(len(sys.argv) - 1):
 		print(sentiments["documents"][argNum]["score"])
-	print(sentiments)
 
 main()
