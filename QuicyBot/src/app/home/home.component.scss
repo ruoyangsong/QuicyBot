@@ -106,6 +106,15 @@
         animation-fill-mode: forwards;
       }
     }
+
+    .button-container {
+      background-color: red;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100vw;
+      height: 100px;
+    }
   }
 }
 
