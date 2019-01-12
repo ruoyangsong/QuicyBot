@@ -19,6 +19,9 @@
       "testTsconfig": "tsconfig.spec.json",
       "prefix": "app",
       "styles": [
+        "../node_modules/primeng/resources/themes/nova-light/theme.css",
+        "../node_modules/primeng/resources/primeng.css",
+        "../node_modules/primeicons/primeicons.css",
         "styles.css"
       ],
       "scripts": [],
