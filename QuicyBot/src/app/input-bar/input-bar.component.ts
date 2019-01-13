@@ -16,6 +16,9 @@ export class InputBarComponent implements OnInit {
   actorName$: Observable<string>;
   actorName$$: BehaviorSubject<string> = new BehaviorSubject('');
 
+  artistImageUrl$: Observable<string>;
+  artistImageUrl$$: BehaviorSubject<string> = new BehaviorSubject('');
+
   trackNameList$: Observable<string[]>;
   trackNameList$$: BehaviorSubject<string[]> = new BehaviorSubject([]);
 
@@ -39,6 +42,7 @@ export class InputBarComponent implements OnInit {
     this.sentimentScoreList$ = this.sentimentScoreList$$.asObservable();
     this.progressBarLoading$ = this.progressBarLoading$$.asObservable();
     this.showResult$ = this.showResult$$.asObservable();
+    this.artistImageUrl$ = this.artistImageUrl$$.asObservable();
   }
   ngOnInit(): void {
     this.searchValue$.pipe(
@@ -57,6 +61,11 @@ export class InputBarComponent implements OnInit {
         this.progressBarLoading$$.next(false);
         this.showResult$$.next(true);
       })
+    ).subscribe();
+    this.searchValue$.pipe(
+      filter((searchValue) => !!searchValue),
+      switchMap((searchValue) => this.imageFetch(searchValue)),
+      tap((imageUrl: string) => this.artistImageUrl$$.next(imageUrl))
     ).subscribe();
   }
 
@@ -104,5 +113,17 @@ export class InputBarComponent implements OnInit {
       );
     });
     return forkJoin(observableBatch);
+  }
+
+  imageFetch(artistName: string): Observable<any> {
+    const url = `https://cors-anywhere.herokuapp.com/http://ws.audioscrobbler.com/2.0/?method=artist.getinfo&artist=${artistName.replace(' ', '%20')}&api_key=a055cea90f3f2dc90e6775c6cca0c605&format=json`;
+    return this.http.get(url).pipe(
+      map((result: {artist: {image: [{}]}}) => {
+          const obj = JSON.parse(JSON.stringify(result.artist.image));
+          return obj[5]['#text'];
+        }
+      ),
+      tap(console.log)
+    );
   }
 }
