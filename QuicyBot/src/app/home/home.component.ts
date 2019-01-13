@@ -12,7 +12,7 @@ import { trigger, transition, state, animate, style } from '@angular/animations'
       // ...
       state('open', style({
         opacity: 0,
-        'transform': 'translateY(-300px)'
+        'transform': 'translateY(-650px)'
 
       })),
       state('closed', style({
