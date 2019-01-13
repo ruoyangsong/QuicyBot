@@ -1,12 +1,34 @@
 import { Component, OnInit } from '@angular/core';
 import {Router} from '@angular/router';
 
+import { trigger, transition, state, animate, style } from '@angular/animations';
+
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss']
+  styleUrls: ['./home.component.scss'],
+  animations: [
+    trigger('childAnimation', [
+      // ...
+      state('open', style({
+        opacity: 0,
+        'transform': 'translateY(-300px)'
+
+      })),
+      state('closed', style({
+        // width: '100px',
+        // opacity: 0.5,
+        // backgroundColor: 'green'
+      })),
+      transition('* => *', [
+        animate('2s ease-in')
+      ]),
+    ]),
+  ]
 })
 export class HomeComponent implements OnInit {
+
+  isOpen = false;
 
   constructor(private router: Router) { }
 
@@ -14,7 +36,11 @@ export class HomeComponent implements OnInit {
   }
 
   redirectToInput() {
-    this.router.navigateByUrl('/input');
+    this.isOpen = !this.isOpen;
+    setTimeout(function () {
+      this.router.navigateByUrl('/input');
+    }.bind(this), 2000);
+
   }
 
 }
