@@ -21,7 +21,7 @@ import { trigger, transition, state, animate, style } from '@angular/animations'
         // backgroundColor: 'green'
       })),
       transition('* => *', [
-        animate('2s ease-in')
+        animate('1.5s ease-in')
       ]),
     ]),
   ]
@@ -39,7 +39,7 @@ export class HomeComponent implements OnInit {
     this.isOpen = !this.isOpen;
     setTimeout(function () {
       this.router.navigateByUrl('/input');
-    }.bind(this), 2000);
+    }.bind(this), 1500);
 
   }
 
