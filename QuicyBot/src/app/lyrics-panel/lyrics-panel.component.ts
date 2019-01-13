@@ -9,7 +9,7 @@ export class LyricsPanelComponent implements OnInit {
   @Input() actorName: string;
   @Input() trackNameList: string[];
   @Input() lyricsList: string[];
-  @Input() sentimentScoreList: string[];
+  @Input() sentimentScoreList: number[];
   constructor() { }
 
   ngOnInit() {

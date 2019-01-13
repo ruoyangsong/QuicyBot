@@ -25,8 +25,8 @@ export class InputBarComponent implements OnInit {
   lyricsList$: Observable<string[]>;
   lyricsList$$: BehaviorSubject<string[]> = new BehaviorSubject([]);
 
-  sentimentScoreList$: Observable<string[]>;
-  sentimentScoreList$$: BehaviorSubject<string[]> = new BehaviorSubject([]);
+  sentimentScoreList$: Observable<number[]>;
+  sentimentScoreList$$: BehaviorSubject<number[]> = new BehaviorSubject([]);
 
   progressBarLoading$$: BehaviorSubject<boolean> = new BehaviorSubject(false);
   progressBarLoading$: Observable<boolean>;
@@ -56,7 +56,7 @@ export class InputBarComponent implements OnInit {
       switchMap((trackidList) => this.lyricSearch(trackidList)),
       tap((lyricsList: string[]) => this.lyricsList$$.next(lyricsList)),
       switchMap((lyricsList: string[]) => this.sentimentAnalytics(lyricsList)),
-      tap((sentimentScore: string[]) => {
+      tap((sentimentScore: number[]) => {
         this.sentimentScoreList$$.next(sentimentScore);
         this.progressBarLoading$$.next(false);
         this.showResult$$.next(true);
