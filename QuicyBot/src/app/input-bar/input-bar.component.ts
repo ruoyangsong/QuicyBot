@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {BehaviorSubject, Observable} from 'rxjs';
-import {filter, map, switchMap} from 'rxjs/operators';
+import {filter, flatMap, map, switchMap, tap} from 'rxjs/operators';
 import {HttpClient} from '@angular/common/http';
 
 @Component({
@@ -20,16 +20,13 @@ export class InputBarComponent implements OnInit {
     this.searchValue$.pipe(
       filter((searchValue) => !!searchValue),
       switchMap((searchValue) => this.trackSearch(searchValue)),
+      flatMap((trackid) => this.lyricSearch(trackid)),
+      switchMap((lyric) => this.sentimentAnalytics(lyric))
     ).subscribe();
 
   }
 
   onSearchChange(searchValue: string) {
-    // this.trackSearch(searchValue).pipe(
-    //   map((result: {message: {body: {track_list: [{track: {track_id: string}}]}}}) => {
-    //     return result.message.body.track_list.map(track_list => track_list.track.track_id);
-    //   }),
-    //   ).subscribe();
     this.searchValue$$.next(searchValue);
   }
 
@@ -46,6 +43,17 @@ export class InputBarComponent implements OnInit {
 
   lyricSearch(trackId: string): Observable<any> {
     const url = `${this.baseURL}track.lyrics.get?track_id=${trackId}&apikey=984243ce7ca61e61a35a3151cb408bb5`;
-    return this.http.get(url);
+    return this.http.get(url).pipe(
+      map((result: {message: {body: {lyrics: {lyrics_body: string}}}}) => result.message.body.lyrics.lyrics_body),
+      map((lyrics: string) => {
+        lyrics = lyrics.replace('\n', ' ');
+        return lyrics.substr(0, lyrics.indexOf('*****'));
+      })
+    );
+  }
+
+  sentimentAnalytics(lyrics: string): Observable<any> {
+    const url = `https://cors-anywhere.herokuapp.com/http://204.209.76.199:5000/query-lyric-sentiment?lyrics=${lyrics}`;
+    return this.http.get(url).pipe(tap(console.log));
   }
 }
