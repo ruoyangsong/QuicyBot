@@ -65,9 +65,9 @@ export class InputBarComponent implements OnInit {
     console.log(url);
     return this.http.get(url).pipe(
       map((result: {artist: {image: [{}]}}) => {
-        return result.artist.image[5]["#text"] ; }
-      ),
-      tap(console.log) 
+        return result.artist.image[5]['#text'];
+      }),
+      tap(console.log)
     );
   }
 }
