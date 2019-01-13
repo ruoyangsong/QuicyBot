@@ -7,8 +7,9 @@ import {Component, Input, OnInit} from '@angular/core';
 })
 export class LyricsPanelComponent implements OnInit {
   @Input() actorName: string;
-  @Input() lyrics: string[];
-  @Input() sentimentScore: string[];
+  @Input() trackNameList: string[];
+  @Input() lyricsList: string[];
+  @Input() sentimentScoreList: string[];
   constructor() { }
 
   ngOnInit() {

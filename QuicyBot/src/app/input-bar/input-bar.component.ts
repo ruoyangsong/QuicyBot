@@ -16,11 +16,14 @@ export class InputBarComponent implements OnInit {
   actorName$: Observable<string>;
   actorName$$: BehaviorSubject<string> = new BehaviorSubject('');
 
-  lyrics$: Observable<string[]>;
-  lyrics$$: BehaviorSubject<string[]> = new BehaviorSubject([]);
+  trackNameList$: Observable<string[]>;
+  trackNameList$$: BehaviorSubject<string[]> = new BehaviorSubject([]);
 
-  sentimentScore$: Observable<string[]>;
-  sentimentScore$$: BehaviorSubject<string[]> = new BehaviorSubject([]);
+  lyricsList$: Observable<string[]>;
+  lyricsList$$: BehaviorSubject<string[]> = new BehaviorSubject([]);
+
+  sentimentScoreList$: Observable<string[]>;
+  sentimentScoreList$$: BehaviorSubject<string[]> = new BehaviorSubject([]);
 
   progressBarLoading$$: BehaviorSubject<boolean> = new BehaviorSubject(false);
   progressBarLoading$: Observable<boolean>;
@@ -28,8 +31,9 @@ export class InputBarComponent implements OnInit {
   constructor(private http: HttpClient) {
     this.searchValue$ = this.searchValue$$.asObservable();
     this.actorName$ = this.actorName$$.asObservable();
-    this.lyrics$ = this.lyrics$$.asObservable();
-    this.sentimentScore$ = this.sentimentScore$$.asObservable();
+    this.trackNameList$ = this.trackNameList$$.asObservable();
+    this.lyricsList$ = this.lyricsList$$.asObservable();
+    this.sentimentScoreList$ = this.sentimentScoreList$$.asObservable();
     this.progressBarLoading$ = this.progressBarLoading$$.asObservable();
   }
   ngOnInit(): void {
@@ -42,11 +46,10 @@ export class InputBarComponent implements OnInit {
       }),
       switchMap((searchValue) => this.trackSearch(searchValue)),
       switchMap((trackidList) => this.lyricSearch(trackidList)),
-      tap((lyricsList: string[]) => this.lyrics$$.next(lyricsList)),
+      tap((lyricsList: string[]) => this.lyricsList$$.next(lyricsList)),
       switchMap((lyricsList: string[]) => this.sentimentAnalytics(lyricsList)),
       tap((sentimentScore: string[]) => {
-        debugger;
-        this.sentimentScore$$.next(sentimentScore);
+        this.sentimentScoreList$$.next(sentimentScore);
         this.progressBarLoading$$.next(false);
       })
     ).subscribe();
@@ -60,8 +63,9 @@ export class InputBarComponent implements OnInit {
     const url = `${this.baseURL}track.search?&q_artist=${artistName}
     &page_size=3&page=1&s_track_rating=desc&apikey=984243ce7ca61e61a35a3151cb408bb5`;
     return this.http.get(url).pipe(
-      map((result: {message: {body: {track_list: [{track: {track_id: string, artist_name: string}}]}}}) => {
+      map((result: {message: {body: {track_list: [{track: {track_id: string, track_name: string, artist_name: string}}]}}}) => {
         this.actorName$$.next(result.message.body.track_list[0].track.artist_name);
+        this.trackNameList$$.next(result.message.body.track_list.map(track_list => track_list.track.track_name));
         return result.message.body.track_list.map(track_list => track_list.track.track_id);
       })
     );
