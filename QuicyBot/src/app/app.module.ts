@@ -11,6 +11,8 @@ import {HttpClientModule} from '@angular/common/http';
 import { LyricsPanelComponent } from './lyrics-panel/lyrics-panel.component';
 
 import { MatProgressBarModule } from '@angular/material';
+import {MatExpansionModule } from '@angular/material';
+import { MatCardModule } from '@angular/material';
 
 @NgModule({
   declarations: [
@@ -24,7 +26,9 @@ import { MatProgressBarModule } from '@angular/material';
     AppRoutingModule,
     HttpClientModule,
     HomeModule,
-    MatProgressBarModule
+    MatProgressBarModule,
+    MatExpansionModule,
+    MatCardModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -28,6 +28,9 @@ export class InputBarComponent implements OnInit {
   progressBarLoading$$: BehaviorSubject<boolean> = new BehaviorSubject(false);
   progressBarLoading$: Observable<boolean>;
 
+  showResult$$: BehaviorSubject<boolean> = new BehaviorSubject(false);
+  showResult$: Observable<boolean>;
+
   constructor(private http: HttpClient) {
     this.searchValue$ = this.searchValue$$.asObservable();
     this.actorName$ = this.actorName$$.asObservable();
@@ -35,6 +38,7 @@ export class InputBarComponent implements OnInit {
     this.lyricsList$ = this.lyricsList$$.asObservable();
     this.sentimentScoreList$ = this.sentimentScoreList$$.asObservable();
     this.progressBarLoading$ = this.progressBarLoading$$.asObservable();
+    this.showResult$ = this.showResult$$.asObservable();
   }
   ngOnInit(): void {
     this.searchValue$.pipe(
@@ -51,6 +55,7 @@ export class InputBarComponent implements OnInit {
       tap((sentimentScore: string[]) => {
         this.sentimentScoreList$$.next(sentimentScore);
         this.progressBarLoading$$.next(false);
+        this.showResult$$.next(true);
       })
     ).subscribe();
   }
