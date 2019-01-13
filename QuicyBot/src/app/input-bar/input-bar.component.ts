@@ -13,8 +13,12 @@ export class InputBarComponent implements OnInit {
   searchValue$$: BehaviorSubject<string> = new BehaviorSubject('');
   searchValue$: Observable<string>;
   trackIdList$: Observable<string[]>;
+
+  artistImageUrl$: Observable<string>;
+  artistImageUrl$$: BehaviorSubject<string> = new BehaviorSubject('');
   constructor(private http: HttpClient) {
     this.searchValue$ = this.searchValue$$.asObservable();
+    this.artistImageUrl$ = this.artistImageUrl$$.asObservable();
   }
   ngOnInit(): void {
     this.searchValue$.pipe(
@@ -26,6 +30,7 @@ export class InputBarComponent implements OnInit {
     this.searchValue$.pipe(
       filter((searchValue) => !!searchValue),
       switchMap((searchValue) => this.imageFetch(searchValue)),
+      tap((imageUrl: string) => this.artistImageUrl$$.next(imageUrl))
     ).subscribe();
   }
 
@@ -63,11 +68,8 @@ export class InputBarComponent implements OnInit {
   imageFetch(artistName: string): Observable<any> {
     const url = `https://cors-anywhere.herokuapp.com/http://ws.audioscrobbler.com/2.0/?method=artist.getinfo&artist=${artistName.replace(' ', '%20')}&api_key=a055cea90f3f2dc90e6775c6cca0c605&format=json`;
     return this.http.get(url).pipe(
-      map((result: {artist: {image: [{}]}}) => 
-        {
-          var obj = JSON.parse(JSON.stringify(result.artist.image));
-          var element = <HTMLInputElement>document.getElementById("photo_of_musician");
-          element.src = obj[5]['#text'];
+      map((result: {artist: {image: [{}]}}) => {
+          const obj = JSON.parse(JSON.stringify(result.artist.image));
           return obj[5]['#text'];
         }
       )

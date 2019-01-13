@@ -1,5 +1,4 @@
 <div class="panel">
   <input class="name-input" matInput placeholder="Enter a name" (keyup.enter)="onSearchChange($event.target.value)">
-  <img   class="music-photo" src="https://lastfm-img2.akamaized.net/i/u/300x300/fe2d5fee8956397a3eee0a7df7ae2a70.png">
-  <img id="photo_of_musician" class="music-photo" *ngIf="!!url" src="url">
+  <img id="photo_of_musician" class="music-photo" *ngIf="!! (artistImageUrl$ | async)" [src]="artistImageUrl$ | async">
 </div>
