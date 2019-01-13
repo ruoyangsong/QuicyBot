@@ -1,0 +1,57 @@
+<div class="result">
+
+  <mat-card>
+    <span class="actor-name">{{actorName}}</span>
+
+    <mat-progress-bar class="bar" mode="determinate" value="{{(sentimentScoreList[0]+sentimentScoreList[1]+sentimentScoreList[2])*100/3}}"></mat-progress-bar>
+    <span>&nbsp;{{(sentimentScoreList[0]+sentimentScoreList[1]+sentimentScoreList[2])*100/3 | number:'1.0-0'}}%</span>
+
+  </mat-card>
+
+  <mat-accordion>
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          {{trackNameList[0]}}
+        </mat-panel-title>
+        <mat-panel-description>
+          <mat-progress-bar class="bar" mode="determinate" value="{{sentimentScoreList[0]*100}}"></mat-progress-bar>
+          <span>&nbsp;{{sentimentScoreList[0]*100 | number:'1.0-0'}}%</span>
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+
+      <div>{{lyricsList[0]}}</div>
+    </mat-expansion-panel>
+
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          {{trackNameList[1]}}
+        </mat-panel-title>
+        <mat-panel-description>
+          <mat-progress-bar class="bar" mode="determinate" value="{{sentimentScoreList[1]*100}}"></mat-progress-bar>
+          <span>&nbsp;{{sentimentScoreList[1]*100 | number:'1.0-0'}}%</span>
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+
+      <div>{{lyricsList[1]}}</div>
+    </mat-expansion-panel>
+
+    <mat-expansion-panel>
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          {{trackNameList[2]}}
+        </mat-panel-title>
+        <mat-panel-description>
+          <mat-progress-bar class="bar" mode="determinate" value="{{sentimentScoreList[2]*100}}"></mat-progress-bar>
+          <span>&nbsp;{{sentimentScoreList[2]*100 | number:'1.0-0'}}%</span>
+        </mat-panel-description>
+      </mat-expansion-panel-header>
+
+      <div>{{lyricsList[2]}}</div>
+    </mat-expansion-panel>
+
+  </mat-accordion>
+
+</div>
+
