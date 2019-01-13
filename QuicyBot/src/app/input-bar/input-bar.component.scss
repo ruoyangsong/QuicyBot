@@ -1,15 +1,7 @@
-.panel {
-  height:50em;
-  background-size:cover;
-  width:auto;
-  background-image:url('https://www.billboard.com/files/styles/1696x952/public/media/quincy-bb22-backstage-pass-2018-fea-u-billboard-1500.jpg');
-  background-position:50% 50%;
-  opacity: 0.5;
-  .name-input {
-    width: 33%;
-    height: 40px;
-    margin-top: 200px;
-    margin-left: 100px;
-
-  }
+.name-input {
+  width: 33%;
+  height: 40px;
+  margin-top: 200px;
+  margin-left: 100px;
+  font-size: 20px;
 }
