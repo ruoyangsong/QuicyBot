@@ -21,11 +21,15 @@ export class InputBarComponent implements OnInit {
 
   sentimentScore$: Observable<string[]>;
   sentimentScore$$: BehaviorSubject<string[]> = new BehaviorSubject([]);
+
+  hideProgressBar: boolean;
+
   constructor(private http: HttpClient) {
     this.searchValue$ = this.searchValue$$.asObservable();
     this.actorName$ = this.actorName$$.asObservable();
     this.lyrics$ = this.lyrics$$.asObservable();
     this.sentimentScore$ = this.sentimentScore$$.asObservable();
+    this.hideProgressBar = true;
   }
   ngOnInit(): void {
     this.searchValue$.pipe(

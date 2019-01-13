@@ -10,6 +10,8 @@ import { InputBarComponent } from './input-bar/input-bar.component';
 import {HttpClientModule} from '@angular/common/http';
 import { LyricsPanelComponent } from './lyrics-panel/lyrics-panel.component';
 
+import { MatProgressBarModule } from '@angular/material';
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -21,7 +23,8 @@ import { LyricsPanelComponent } from './lyrics-panel/lyrics-panel.component';
     BrowserAnimationsModule,
     AppRoutingModule,
     HttpClientModule,
-    HomeModule
+    HomeModule,
+    MatProgressBarModule
   ],
   providers: [],
   bootstrap: [AppComponent]
