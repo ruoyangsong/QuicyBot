@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import {BehaviorSubject, forkJoin, Observable} from 'rxjs';
-import {filter, map, switchMap, tap} from 'rxjs/operators';
+import {BehaviorSubject, EMPTY, empty, forkJoin, Observable} from 'rxjs';
+import {catchError, filter, map, switchMap, tap} from 'rxjs/operators';
 import {HttpClient} from '@angular/common/http';
 
 @Component({
@@ -22,23 +22,33 @@ export class InputBarComponent implements OnInit {
   sentimentScore$: Observable<string[]>;
   sentimentScore$$: BehaviorSubject<string[]> = new BehaviorSubject([]);
 
-  hideProgressBar: boolean;
+  progressBarLoading$$: BehaviorSubject<boolean> = new BehaviorSubject(false);
+  progressBarLoading$: Observable<boolean>;
 
   constructor(private http: HttpClient) {
     this.searchValue$ = this.searchValue$$.asObservable();
     this.actorName$ = this.actorName$$.asObservable();
     this.lyrics$ = this.lyrics$$.asObservable();
     this.sentimentScore$ = this.sentimentScore$$.asObservable();
-    this.hideProgressBar = true;
+    this.progressBarLoading$ = this.progressBarLoading$$.asObservable();
   }
   ngOnInit(): void {
     this.searchValue$.pipe(
       filter((searchValue) => !!searchValue),
+      tap(() => this.progressBarLoading$$.next(true)),
+      catchError(() => {
+        this.progressBarLoading$$.next(false);
+        return EMPTY;
+      }),
       switchMap((searchValue) => this.trackSearch(searchValue)),
       switchMap((trackidList) => this.lyricSearch(trackidList)),
       tap((lyricsList: string[]) => this.lyrics$$.next(lyricsList)),
       switchMap((lyricsList: string[]) => this.sentimentAnalytics(lyricsList)),
-      tap((sentimentScore: string[]) => this.sentimentScore$$.next(sentimentScore))
+      tap((sentimentScore: string[]) => {
+        debugger;
+        this.sentimentScore$$.next(sentimentScore);
+        this.progressBarLoading$$.next(false);
+      })
     ).subscribe();
   }
 
@@ -80,7 +90,7 @@ export class InputBarComponent implements OnInit {
       const url = `https://cors-anywhere.herokuapp.com/http://204.209.76.199:5000/query-lyric-sentiment?lyrics=${lyrics}`;
       observableBatch.push(
         this.http.get(url).pipe(
-          map((result: {document: [{score: string}]}) => result.document[0].score)
+          map((result: {documents: [{score: string}]}) => result.documents[0].score)
         )
       );
     });

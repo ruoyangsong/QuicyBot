@@ -1,6 +1,6 @@
 <div>
   <input class="name-input" matInput placeholder="Enter a name" (keyup.enter)="onSearchChange($event.target.value)">
-  <mat-progress-bar [hidden]="hideProgressBar" mode="query"></mat-progress-bar>
+  <mat-progress-bar *ngIf="progressBarLoading$ | async" mode="query"></mat-progress-bar>
   <app-lyrics-panel [actorName]="actorName$ | async" [lyrics]="lyrics$ | async" [sentimentScore]="sentimentScore$ | async"></app-lyrics-panel>
 </div>
 
