@@ -25,7 +25,7 @@ export class InputBarComponent implements OnInit {
     ).subscribe();
     this.searchValue$.pipe(
       filter((searchValue) => !!searchValue),
-      switchMap((searchValue) => this.imageFetch(searchValue))
+      switchMap((searchValue) => this.imageFetch(searchValue)),
     ).subscribe();
   }
 
@@ -66,6 +66,8 @@ export class InputBarComponent implements OnInit {
       map((result: {artist: {image: [{}]}}) => 
         {
           var obj = JSON.parse(JSON.stringify(result.artist.image));
+          var element = <HTMLInputElement>document.getElementById("photo_of_musician");
+          element.src = obj[5]['#text'];
           return obj[5]['#text'];
         }
       )
