@@ -40,4 +40,4 @@ def query_lyric_sentiment():
     return jsonify(response.json())
 
 if __name__ == '__main__':
-    app.run(debug=True, port=5000) #run app in debug mode on port 5000
+    app.run(debug=True, host="10.2.13.176", port=5000) #run app in debug mode on port 5000
