@@ -8,11 +8,13 @@ import { AppComponent } from './app.component';
 import { HomeModule } from './home/home.module';
 import { InputBarComponent } from './input-bar/input-bar.component';
 import {HttpClientModule} from '@angular/common/http';
+import { LyricsPanelComponent } from './lyrics-panel/lyrics-panel.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    InputBarComponent
+    InputBarComponent,
+    LyricsPanelComponent
   ],
   imports: [
     BrowserModule,
