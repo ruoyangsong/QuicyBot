@@ -1,5 +1,6 @@
 ## Project Overview:
-This is the web application used for lyrics sentiment analysis using the Cognitive Services APIs provided by Microsoft. The frontend is built using Angular and rxjs.
+This is the web application used for lyrics sentiment analysis using the Cognitive Services APIs provided by Microsoft. You can find the API documentation in https://azure.microsoft.com/en-ca/services/cognitive-services/text-analytics/.
+The frontend is built using Angular and rxjs, and the backend server is built by flask.
 
 ## Quick Start
 <b>1. Clone the Project:</b>
